@@ -332,7 +332,8 @@ enum dns_err {
     dns_err_unprintable     = 7,
     dns_err_too_many        = 8,
     dns_err_unterminated    = 9,
-    dns_err_rdata_too_long  = 10
+    dns_err_rdata_too_long  = 10,
+    dns_err_offset_loops    = 11
 };
 
 /* advance the data position */
@@ -480,6 +481,10 @@ static enum dns_err dns_header_parse_name (const dns_hdr *hdr, char **name, int 
             }
             offsetname = (const void *)((char *)hdr + (ntohs(*offset) & 0x3FFF));
             offsetlen -= (ntohs(*offset) & 0x3FFF);
+	    /* if params equal, loop*/
+            if(offsetlen == len+2 && name == offsetname){
+	        return dns_err_offset_loops;
+	    }
             return dns_header_parse_name(hdr, (void *)&offsetname, &offsetlen, outname, outname_len);
         } else {
             return dns_err_label_malformed;
