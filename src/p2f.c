@@ -1666,7 +1666,7 @@ static void flow_record_print_json (const struct flow_record *record) {
         }
     }
 
-    if (report_dns && (rec->key.sp == 53 || rec->key.dp == 53)) {
+    //if (report_dns && (rec->key.sp == 53 || rec->key.dp == 53)) {
         //    unsigned int count;
         //    char **twin_dns_name = NULL;
         //unsigned short *twin_pkt_len = NULL;
@@ -1680,9 +1680,9 @@ static void flow_record_print_json (const struct flow_record *record) {
         //
         //    dns_printf(rec->dns.dns_name, rec->pkt_len, twin_dns_name, twin_pkt_len, count, output);
 
-        dns_print_json(&rec->dns, rec->twin ? &rec->twin->dns : NULL, output);
+    //    dns_print_json(&rec->dns, rec->twin ? &rec->twin->dns : NULL, output);
 
-    }
+    //}
   
     { 
         unsigned int retrans, invalid;
